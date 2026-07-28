@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ClientRepository extends JpaRepository<Client, String> {
     List<Client> findByProfessionalId(String professionalId);
+    boolean existsByProfessionalIdAndEmail(String professionalId, String email);
 }
