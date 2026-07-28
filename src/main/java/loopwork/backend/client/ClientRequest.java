@@ -10,6 +10,7 @@ public record ClientRequest(
         String name,
 
         @Email
+        @NotBlank
         String email
 ) {
 }
