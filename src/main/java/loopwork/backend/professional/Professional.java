@@ -1,6 +1,10 @@
 package loopwork.backend.professional;
 import jakarta.persistence.*;
+import loopwork.backend.client.Client;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "professional")
@@ -22,10 +26,14 @@ public class Professional {
     @Column
     private LocalDateTime createdAt;
 
-    public Professional(String name, String email, String password) {
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Client> clients;
+
+    public Professional(String name, String email, String passwordHash) {
         this.name = name;
         this.email = email;
-        this.passwordHash = password;
+        this.passwordHash = passwordHash;
+        this.clients = new ArrayList<>();
         this.createdAt = LocalDateTime.now();
     }
 
@@ -55,11 +63,15 @@ public class Professional {
         return passwordHash;
     }
 
-    public void setpasswordHash(String password) {
+    public void setPasswordHash(String password) {
         this.passwordHash = password;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<Client> getClients() {
+        return clients;
     }
 }
