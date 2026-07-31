@@ -2,13 +2,14 @@ package loopwork.backend.client;
 
 import jakarta.persistence.*;
 import loopwork.backend.professional.Professional;
+import loopwork.backend.recurringSession.RecurringSession;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(
         name = "client",
-        //
         uniqueConstraints = @UniqueConstraint(columnNames = {"professional_id", "email"})
 )
 public class Client {
@@ -30,6 +31,9 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professional_id", nullable = false)
     private Professional professional;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<RecurringSession> recurringSessions;
 
     public Client(String name, String email, Professional professional) {
         this.name = name;
