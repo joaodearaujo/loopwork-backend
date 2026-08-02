@@ -58,6 +58,36 @@ public class RecurringSession {
         this.effectiveEndDate = effectiveEndDate;
     }
 
+    public void updateDayOfWeek(DayOfWeek newDayOfWeek) {
+        if (newDayOfWeek != null ) {
+            setDayOfWeek(newDayOfWeek);
+        }
+    }
+
+    public void updateSchedule(LocalTime newStartTime, LocalTime newEndtime) {
+        LocalTime finalStartTime = newStartTime != null ? newStartTime : this.startTime;
+        LocalTime finalEndTime = newEndtime != null ? newEndtime : this.endTime;
+
+        if (finalEndTime != null && newEndtime.isBefore(finalEndTime)) {
+            throw  new RuntimeException("End time must be after the start time.");
+        }
+
+        this.startTime = finalStartTime;
+        this.endTime = finalStartTime;
+    }
+
+    public void updateEffectivePeriod(LocalDate newEffectiveStartDate, LocalDate newEffectiveEndDate) {
+        LocalDate finalEffectiveStartDate = newEffectiveStartDate != null ? newEffectiveStartDate : this.effectiveStartDate;
+        LocalDate finalEffectiveEndDate = newEffectiveEndDate != null ? newEffectiveEndDate : this.effectiveEndDate;
+
+        if (newEffectiveEndDate != null && newEffectiveEndDate.isBefore(newEffectiveStartDate)) {
+            throw  new RuntimeException("End time must be after the start time.");
+        }
+
+        this.effectiveStartDate = finalEffectiveStartDate;
+        this.effectiveEndDate = finalEffectiveEndDate;
+    }
+
     public RecurringSession() {}
 
     public String getId() {

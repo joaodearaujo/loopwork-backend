@@ -1,8 +1,6 @@
 package loopwork.backend.client;
 
 import loopwork.backend.professional.Professional;
-import loopwork.backend.professional.ProfessionalNotFoundException;
-import loopwork.backend.professional.ProfessionalRepository;
 import loopwork.backend.professional.ProfessionalService;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +42,10 @@ public class ClientService {
                 .stream()
                 .map(ClientResponse::fromEntity)
                 .toList();
+    }
+
+    public Client findByIdOrThrow(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
     }
 }
