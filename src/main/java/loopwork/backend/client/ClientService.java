@@ -43,4 +43,9 @@ public class ClientService {
                 .map(ClientResponse::fromEntity)
                 .toList();
     }
+
+    public Client findByIdOrThrow(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
+    }
 }
