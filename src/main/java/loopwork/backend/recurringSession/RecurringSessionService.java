@@ -5,6 +5,7 @@ import loopwork.backend.client.ClientService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -53,6 +54,10 @@ public class RecurringSessionService {
 
         RecurringSession updatedRecurringSession = repository.save(recurringSession);
         return RecurringSessionResponse.fromEntity(updatedRecurringSession);
+    }
+
+    public List<RecurringSession> findAllActive() {
+        return repository.findByEffectiveEndDateIsNullOrEffectiveEndDateGreaterThanEqual(LocalDate.now());
     }
 
     public RecurringSession findByIdOrThrow(String recurringSessionId) {
