@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class OccurrenceService {
     }
 
     @Scheduled(cron = "0 0 2 * * *")
+    @Transactional
     public void materializeUpcomingOccurrence() {
         List<RecurringSession> activeSessions = recurringSessionService.findAllActive();
         LocalDate today = LocalDate.now();
