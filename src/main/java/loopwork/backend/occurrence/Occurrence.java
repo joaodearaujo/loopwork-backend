@@ -34,13 +34,37 @@ public class Occurrence {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public Occurrence(RecurringSession recurringSession, LocalDate date, LocalTime startTime, LocalTime endTime, OccurrenceStatus occurrenceStatus) {
+    public Occurrence(
+            RecurringSession recurringSession,
+            LocalDate date,
+            LocalTime startTime,
+            LocalTime endTime,
+            OccurrenceStatus occurrenceStatus
+    ) {
         this.recurringSession = recurringSession;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.occurrenceStatus = occurrenceStatus;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void cancel() {
+        if (this.occurrenceStatus != OccurrenceStatus.SCHEDULED) {
+            throw new InvalidOccurrenceStatusException();
+        }
+        this.occurrenceStatus = OccurrenceStatus.CANCELLED;
+    }
+
+    public void reschedule(LocalDate newDate, LocalTime newStartTime, LocalTime newEndTime) {
+        if (this.occurrenceStatus != OccurrenceStatus.SCHEDULED) {
+            throw new InvalidOccurrenceStatusException();
+        }
+
+        this.date = newDate;
+        this.startTime = newStartTime;
+        this.endTime = newEndTime;
+        this.occurrenceStatus = OccurrenceStatus.RESCHEDULED;
     }
 
     public Occurrence() {}
