@@ -1,7 +1,7 @@
 # Loopwork — Service Layer Requirements (Pending Implementation)
 
 This document describes the expected behavior for `RecurringSessionService`,
-`OccurrenceService`, and `NotificationService`. Written as a specification
+`NotificationService`, and `NotificationService`. Written as a specification
 to implement against — no code included by design.
 
 ---

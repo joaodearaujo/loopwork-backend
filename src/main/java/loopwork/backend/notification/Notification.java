@@ -18,7 +18,7 @@ public class Notification {
     private Occurrence occurrence;
 
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private NotificationType notificationType;
 
     @Enumerated(EnumType.STRING)
     private NotificationStatus notificationStatus;
@@ -26,9 +26,9 @@ public class Notification {
     @Column(name = "sent_at")
     private LocalDateTime sentAt;
 
-    public Notification(Occurrence occurrence, Type type, NotificationStatus notificationStatus) {
+    public Notification(Occurrence occurrence, NotificationType notificationType, NotificationStatus notificationStatus) {
         this.occurrence = occurrence;
-        this.type = type;
+        this.notificationType = notificationType;
         this.notificationStatus = notificationStatus;
     }
 
@@ -46,12 +46,12 @@ public class Notification {
         this.occurrence = occurrence;
     }
 
-    public Type getType() {
-        return type;
+    public NotificationType getType() {
+        return notificationType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setType(NotificationType notificationType) {
+        this.notificationType = notificationType;
     }
 
     public NotificationStatus getStatus() {

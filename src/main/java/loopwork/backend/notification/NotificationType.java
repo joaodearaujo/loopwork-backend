@@ -1,5 +1,5 @@
 package loopwork.backend.notification;
 
-public enum Type {
+public enum NotificationType {
     REMINDER
 }
