@@ -1,6 +1,8 @@
 package loopwork.backend.occurrence;
 
-public class OccurrenceNotFoundException extends RuntimeException {
+import loopwork.backend.exception.ResourceNotFoundException;
+
+public class OccurrenceNotFoundException extends ResourceNotFoundException {
     public OccurrenceNotFoundException(String id) {
         super("Occurrence not found with id: " + id);
     }
