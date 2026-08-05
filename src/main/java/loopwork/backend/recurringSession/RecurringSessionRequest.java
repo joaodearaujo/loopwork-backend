@@ -9,9 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record RecurringSessionRequest(
-        @NotBlank(message = "Client identifier must not be null or blank.")
-        @Size(min = 1, max = 36, message = "Client identifier must be between 1 and 36 characters.")
-        String clientId,
 
         @NotNull(message = "Day of the week is required.")
         DayOfWeek dayOfWeek,
