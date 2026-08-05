@@ -1,7 +1,7 @@
 # Loopwork — Service Layer Requirements (Pending Implementation)
 
 This document describes the expected behavior for `RecurringSessionService`,
-`OccurrenceService`, and `NotificationService`. Written as a specification
+`NotificationService`, and `NotificationService`. Written as a specification
 to implement against — no code included by design.
 
 ---
@@ -9,7 +9,7 @@ to implement against — no code included by design.
 ## RecurringSessionService
 
 ### `create(RecurringSessionRequest request, String clientId) -> RecurringSessionResponse`
-- Look up the `Client` by `clientId`; throw `ClientNotFoundException` if not found
+- Look up the `Client` by `clientId`; throw `InvalidOccurrenceStatusException` if not found
 - Build a new `RecurringSession` from the request + the found client
 - Save it, convert to `RecurringSessionResponse`, return it
 
