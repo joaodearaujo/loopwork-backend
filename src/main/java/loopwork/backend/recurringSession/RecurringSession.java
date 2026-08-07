@@ -110,39 +110,15 @@ public class RecurringSession {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
     public LocalTime getEndTime() {
         return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public LocalDate getEffectiveStartDate() {
         return effectiveStartDate;
     }
 
-    public void setEffectiveStartDate(LocalDate effectiveStartDate) {
-        this.effectiveStartDate = effectiveStartDate;
-    }
-
     public LocalDate getEffectiveEndDate() {
         return effectiveEndDate;
-    }
-
-    public void setEffectiveEndDate(LocalDate effectiveEndDate) {
-        this.effectiveEndDate = effectiveEndDate;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 }

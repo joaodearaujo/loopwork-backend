@@ -1,5 +1,6 @@
 package loopwork.backend.occurrence;
 
+import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,18 @@ public class OccurrenceController {
         return ResponseEntity.ok(occurrences);
     }
 
-    @PatchMapping("/{id}/cancel")
-    public ResponseEntity<OccurrenceResponse> cancel(@PathVariable String id) {
-        OccurrenceResponse response = service.cancel(id);
+    @PatchMapping("/{occurrenceId}/cancel")
+    public ResponseEntity<OccurrenceResponse> cancel(@PathVariable String occurrenceId) {
+        OccurrenceResponse response = service.cancel(occurrenceId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{occurrenceId}/reschedule")
+    public ResponseEntity<OccurrenceResponse> reschedule(
+            @Valid @RequestBody RescheduleRequest rescheduleRequest,
+            @PathVariable String occurrenceId
+    ) {
+        OccurrenceResponse response = service.reschedule(rescheduleRequest, occurrenceId);
         return ResponseEntity.ok(response);
     }
 }

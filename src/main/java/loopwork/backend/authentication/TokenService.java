@@ -7,9 +7,9 @@ import loopwork.backend.professional.Professional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-
 
 @Service
 public class TokenService {
@@ -24,13 +24,13 @@ public class TokenService {
                 .subject(professional.getId())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationMs))
-                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .signWith(getSigningKey())
                 .compact();
     }
 
     public String extractProfessionalId(String token) {
         return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
@@ -40,12 +40,16 @@ public class TokenService {
     public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
-                    .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                    .verifyWith(getSigningKey())
                     .build()
                     .parseSignedClaims(token);
             return true;
-        } catch (JwtException e) {
+        } catch (JwtException exception) {
             return false;
         }
+    }
+
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 }

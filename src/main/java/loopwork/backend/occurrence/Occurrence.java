@@ -81,32 +81,16 @@ public class Occurrence {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
     }
 
     public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
     public OccurrenceStatus getStatus() {
         return occurrenceStatus;
-    }
-
-    public void setStatus(OccurrenceStatus occurrenceStatus) {
-        this.occurrenceStatus = occurrenceStatus;
     }
 
     public LocalDateTime getCreatedAt() {

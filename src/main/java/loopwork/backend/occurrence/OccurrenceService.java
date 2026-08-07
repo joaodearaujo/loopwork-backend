@@ -91,6 +91,20 @@ public class OccurrenceService {
         return OccurrenceResponse.fromEntity(updated);
     }
 
+    public OccurrenceResponse reschedule(RescheduleRequest rescheduleRequest, String occurrenceId) {
+        Occurrence occurrence = findByIdOrThrow(occurrenceId);
+
+        occurrence.reschedule(
+                rescheduleRequest.newDate(),
+                rescheduleRequest.newStartTime(),
+                rescheduleRequest.newEndTime()
+        );
+
+        Occurrence rescheduled = occurrenceRepository.save(occurrence);
+
+        return OccurrenceResponse.fromEntity(rescheduled);
+    }
+
     public Occurrence findByIdOrThrow(String id) {
         return occurrenceRepository.findById(id)
                 .orElseThrow(() -> new OccurrenceNotFoundException(id));
