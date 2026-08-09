@@ -68,12 +68,12 @@ public class RecurringSession {
         LocalTime finalStartTime = newStartTime != null ? newStartTime : this.startTime;
         LocalTime finalEndTime = newEndtime != null ? newEndtime : this.endTime;
 
-        if (finalEndTime != null && newEndtime.isBefore(finalEndTime)) {
-            throw  new RuntimeException("End time must be after the start time.");
+        if (finalEndTime != null && finalEndTime.isBefore(finalStartTime)) {
+            throw new InvalidRecurringSessionScheduleException("End time must be after the start time.");
         }
 
         this.startTime = finalStartTime;
-        this.endTime = finalStartTime;
+        this.endTime = finalEndTime;
     }
 
     public void updateEffectivePeriod(LocalDate newEffectiveStartDate, LocalDate newEffectiveEndDate) {
@@ -81,7 +81,7 @@ public class RecurringSession {
         LocalDate finalEffectiveEndDate = newEffectiveEndDate != null ? newEffectiveEndDate : this.effectiveEndDate;
 
         if (newEffectiveEndDate != null && newEffectiveEndDate.isBefore(newEffectiveStartDate)) {
-            throw  new RuntimeException("End time must be after the start time.");
+            throw new InvalidRecurringSessionScheduleException("Effective end date must be on or after the effective start date.");
         }
 
         this.effectiveStartDate = finalEffectiveStartDate;
