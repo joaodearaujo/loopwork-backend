@@ -118,16 +118,16 @@ See `docs/adr/001-stack-choice.md` for the full rationale.
 
 ### 4.2 Core business rules
 
-1. **Occurrence materialization:** a scheduled job ensures `Occurrence`
+1. **Occurrence materialization:** a scheduled job ensures `occurrence`
    rows always exist for the next 8 weeks from each active
-   `RecurringSession`.
-2. **Cancellation doesn't delete:** a cancelled `Occurrence` has its
+   `recurringSession`.
+2. **Cancellation doesn't delete:** a cancelled `occurrence` has its
    `status` changed to `CANCELLED`, and is never removed from the
    database (history and future metrics).
-3. **Series edit vs. occurrence edit:** editing a `RecurringSession`
+3. **Series edit vs. occurrence edit:** editing a `recurringSession`
    (e.g., changing the time) does not retroactively change already
    materialized occurrences — only future ones, generated after the edit.
-4. **Concurrency:** every write to `RecurringSession` uses optimistic
+4. **Concurrency:** every write to `recurringSession` uses optimistic
    locking (`version`) to prevent the materialization job and a manual
    edit from causing inconsistency (see ADR 003).
 5. **Notification idempotency:** the reminder job only processes
@@ -199,7 +199,7 @@ A version conflict (optimistic locking) returns HTTP `409 Conflict` with
 | Health check | `/actuator/health` endpoint via Spring Boot Actuator |
 | Idempotency | Notification job only processes `status = PENDING` |
 | Testing | Unit tests for materialization/recurrence logic; integration tests with Testcontainers for real persistence |
-| Concurrency | Optimistic locking (`@Version`) on `RecurringSession` |
+| Concurrency | Optimistic locking (`@Version`) on `recurringSession` |
 
 ---
 

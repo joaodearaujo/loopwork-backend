@@ -5,7 +5,7 @@ Accepted
 
 ## Context
 With eager materialization (ADR 002), there's a race scenario: the
-materialization job can read a `RecurringSession` at the exact moment
+materialization job can read a `recurringSession` at the exact moment
 the professional is editing that same rule (e.g., changing the time).
 If the job uses the stale version, it generates future occurrences with
 incorrect data.
@@ -23,7 +23,7 @@ caching. Resolves most of the problem, but doesn't prevent an exact race
 between simultaneous read and write.
 
 **b) Optimistic locking (`@Version`):** add a `version` column to
-`RecurringSession`. Every update checks whether the version still
+`recurringSession`. Every update checks whether the version still
 matches the expected one (`UPDATE ... WHERE id = ? AND version = ?`);
 if not, the operation fails and is treated as a conflict.
 

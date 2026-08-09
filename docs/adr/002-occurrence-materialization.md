@@ -23,7 +23,7 @@ Exceptions are a direct `UPDATE` on an existing row.
 ## Decision
 Option B — eager materialization, via a job that ensures future
 occurrences exist for the next 8 weeks from each active
-`RecurringSession`.
+`recurringSession`.
 
 ## Consequences
 - **Gain:** a simpler model to reason about, test, and debug — each

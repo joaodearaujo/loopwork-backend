@@ -10,7 +10,7 @@ to implement against — no code included by design.
 
 ### `create(RecurringSessionRequest request, String clientId) -> RecurringSessionResponse`
 - Look up the `Client` by `clientId`; throw `InvalidOccurrenceStatusException` if not found
-- Build a new `RecurringSession` from the request + the found client
+- Build a new `recurringSession` from the request + the found client
 - Save it, convert to `RecurringSessionResponse`, return it
 
 ### `getRecurringSessionsOfClient(String clientId) -> List<RecurringSessionResponse>`
@@ -36,17 +36,17 @@ to implement against — no code included by design.
 
 ### `materializeUpcomingOccurrences() -> void` (or a count, your choice)
 - No request/response DTOs — triggered by `@Scheduled`, not an HTTP call
-- For each **active** `RecurringSession`, walk forward week by week up to
+- For each **active** `recurringSession`, walk forward week by week up to
   +8 weeks from today
 - Skip dates before `effectiveStartDate` or after `effectiveEndDate` (if set)
-- For each valid date: if no `Occurrence` exists yet for that
+- For each valid date: if no `occurrence` exists yet for that
   `(recurringSession, date)` pair, create one with `status = SCHEDULED`
 - Needs a repository method to fetch **all active** recurring sessions
   (not `findByIdOrThrow`, which only fetches one)
 
 ### `getOccurrencesOfProfessional(String professionalId, LocalDate start, LocalDate end) -> List<OccurrenceResponse>`
 - Matches `GET /occurrences?start=&end=` from the spec
-- Open design question: `Occurrence` has no direct `professionalId` — needs
+- Open design question: `occurrence` has no direct `professionalId` — needs
   a way to traverse `Occurrence -> RecurringSession -> Client -> Professional`,
   likely via a repository query method or a join
 
@@ -68,7 +68,7 @@ to implement against — no code included by design.
 
 ### `createPendingReminder(Occurrence occurrence) -> Notification`
 - Not exposed via HTTP — called internally, likely right after an
-  `Occurrence` is materialized
+  `occurrence` is materialized
 - Creates a `Notification` with `type = REMINDER`, `status = PENDING`,
   `sentAt = null`
 
@@ -85,7 +85,7 @@ to implement against — no code included by design.
 
 ## Open decisions before implementation
 
-- [ ] How to query `Occurrence`s by `professionalId` (traversal path)
+- [ ] How to query `occurrence`s by `professionalId` (traversal path)
 - [ ] Reminder window threshold (how many hours before the session)
 - [ ] Whether `OptimisticLockException` is caught in the Service or
       propagated to a future `@ControllerAdvice`
