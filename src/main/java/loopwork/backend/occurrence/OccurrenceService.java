@@ -31,7 +31,7 @@ public class OccurrenceService {
 
     @Scheduled(cron = "0 0 2 * * *")
     @Transactional
-    public void materializeUpcomingOccurrence() {
+    public void materializeUpcomingOccurrences() {
         List<RecurringSession> activeSessions = recurringSessionService.findAllActive();
         LocalDate today = LocalDate.now();
         LocalDate limit = today.plusWeeks(8);
@@ -109,6 +109,4 @@ public class OccurrenceService {
         return occurrenceRepository.findById(id)
                 .orElseThrow(() -> new OccurrenceNotFoundException(id));
     }
-
-
 }
