@@ -1,11 +1,14 @@
 package loopwork.backend.professional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProfessionalService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProfessionalService.class);
     private final ProfessionalRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -34,6 +37,9 @@ public class ProfessionalService {
 
         Professional savedProfessional = repository.save(professional);
 
+        logger.info("Professional created successfully");
+
         return ProfessionalResponse.fromEntity(savedProfessional);
+
     }
 }

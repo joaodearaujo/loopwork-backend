@@ -2,6 +2,8 @@ package loopwork.backend.client;
 
 import loopwork.backend.professional.Professional;
 import loopwork.backend.professional.ProfessionalService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
 @Service
 public class ClientService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
     private final ClientRepository repository;
     private final ProfessionalService professionalService;
 
@@ -31,6 +34,8 @@ public class ClientService {
         );
 
         Client savedClient = repository.save(client);
+
+        logger.info("Client created successfully");
 
         return ClientResponse.fromEntity(savedClient);
     }
