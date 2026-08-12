@@ -25,15 +25,15 @@ public class OccurrenceController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<OccurrenceResponse>> list(
-            @RequestParam String professionalId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
-    ) {
-        List<OccurrenceResponse> occurrences = service.getOccurrencesOfProfessional(professionalId, start, end);
-        return ResponseEntity.ok(occurrences);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<OccurrenceResponse>> list(
+//            @RequestParam String professionalId,
+//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
+//    ) {
+//        List<OccurrenceResponse> occurrences = service.getOccurrencesOfProfessional(professionalId, start, end);
+//        return ResponseEntity.ok(occurrences);
+//    }
 
     @GetMapping
     public ResponseEntity<PageResponse<OccurrenceResponse>> listPage(
@@ -52,8 +52,6 @@ public class OccurrenceController {
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Page<OccurrenceResponse> occurrencePage = service.getOccurrencesOfProfessionalByPage(professionalId, start, end, pageable);
-
-        List<OccurrenceResponse> occurrences = occurrencePage.stream().toList();
 
         // Record to control api format
         PageResponse<OccurrenceResponse> response = new PageResponse<>(
